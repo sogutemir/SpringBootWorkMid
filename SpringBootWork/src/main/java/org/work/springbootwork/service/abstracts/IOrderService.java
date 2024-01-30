@@ -8,7 +8,7 @@ import org.work.springbootwork.dto.OrderDTO;
 import java.util.List;
 
 public interface IOrderService {
-    DataResult<List<OrderDTO>> gettAllOrder();
+    DataResult<List<OrderDTO>> getAllOrder();
     DataResult<OrderDTO> getOrderById(Long id);
     Result addOrder(OrderDTO orderDTO);
     Result updateOrder(OrderDTO orderDTO, Long id);

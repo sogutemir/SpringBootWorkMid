@@ -8,7 +8,7 @@ import org.work.springbootwork.dto.CustomerDTO;
 import java.util.List;
 
 public interface ICustomerService {
-    DataResult<List<CustomerDTO>> gettAllCustomer();
+    DataResult<List<CustomerDTO>> getAllCustomer();
     DataResult<CustomerDTO> getCustomerById(Long id);
     Result addCustomer(CustomerDTO customerDTO);
     Result updateCustomer(CustomerDTO customerDTO, Long id);

@@ -1,50 +1,110 @@
 package org.work.springbootwork.service.concretes;
 
-import org.work.springbootwork.core.results.DataResult;
-import org.work.springbootwork.core.results.Result;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import org.work.springbootwork.core.results.*;
 import org.work.springbootwork.dto.ProductDTO;
+import org.work.springbootwork.model.Product;
+import org.work.springbootwork.repository.ProductRepository;
 import org.work.springbootwork.service.abstracts.IProductService;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ProductService implements IProductService {
+
+    private final ProductRepository productRepository;
+    private final ModelMapper modelMapper;
+
     @Override
-    public DataResult<List<ProductDTO>> gettAllProduct() {
-        return null;
+    public DataResult<List<ProductDTO>> getAllProduct() {
+        List<Product> products = productRepository.findAll();
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class))
+                .collect(java.util.stream.Collectors.toList());
+        return new SuccessDataResult<>(productDTOS, "Product Listed");
     }
 
     @Override
     public DataResult<ProductDTO> getProductById(Long id) {
-        return null;
+        Product product = productRepository.findById(id).orElse(null);
+        if(product == null){
+            return new ErrorDataResult<>(null, "Product not found");
+        }
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        return new SuccessDataResult<>(productDTO, "Product Listed");
     }
 
     @Override
     public Result addProduct(ProductDTO productDTO) {
-        return null;
+        if(productDTO == null){
+            return new ErrorResult("Product not found");
+        }
+        Product product = modelMapper.map(productDTO, Product.class);
+        productRepository.save(product);
+        return new SuccessResult("Product added");
     }
 
     @Override
     public Result updateProduct(ProductDTO productDTO, Long id) {
-        return null;
+
+        if(productDTO == null){
+            return new ErrorResult("Product not found");
+        }
+        Product existProduct = productRepository.findById(id).
+                orElse(null);
+        if(existProduct == null){
+            return new ErrorResult("Product not found");
+        }
+        modelMapper.map(productDTO, existProduct);
+        productRepository.save(existProduct);
+        return new SuccessDataResult<>(productDTO,"Product updated");
     }
 
     @Override
     public Result deleteProduct(Long id) {
-        return null;
+        if(!productRepository.existsById(id)){
+            return new ErrorDataResult<>(null, "Product not found");
+        }
+        productRepository.deleteById(id);
+        return new SuccessResult("Product deleted");
     }
 
     @Override
     public DataResult<List<ProductDTO>> findByCategoryId(Long categoryId) {
-        return null;
+        if(categoryId == null) {
+            return new ErrorDataResult<>(null,"Category not found");
+        }
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class))
+                .collect(java.util.stream.Collectors.toList());
+        return new SuccessDataResult<>(productDTOS, "Product Listed");
     }
 
     @Override
     public DataResult<List<ProductDTO>> findByNameContaining(String name) {
-        return null;
+        if(name == null) {
+            return new ErrorDataResult<>(null,"Product not found");
+        }
+        List<Product> products = productRepository.findByNameContaining(name);
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class))
+                .collect(java.util.stream.Collectors.toList());
+        return new SuccessDataResult<>(productDTOS, "Product Listed");
     }
 
     @Override
     public DataResult<List<ProductDTO>> findProductsByOrderId(Long orderId) {
-        return null;
+        if(orderId == null) {
+            return new ErrorDataResult<>(null,"Product not found");
+        }
+        List<Product> products = productRepository.findProductsByOrderId(orderId);
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class))
+                .collect(java.util.stream.Collectors.toList());
+        return new SuccessDataResult<>(productDTOS, "Product Listed");
     }
 }

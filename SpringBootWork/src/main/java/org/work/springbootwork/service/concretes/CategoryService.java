@@ -20,7 +20,7 @@ public class CategoryService implements ICategoryService {
     private final ModelMapper modelMapper;
 
     @Override
-    public DataResult<List<CategoryDTO>> gettAllCategory() {
+    public DataResult<List<CategoryDTO>> getAllCategory() {
         List<Category> category = categoryRepository.findAll();
         List<CategoryDTO> categoryDTOS = category.stream()
                 .map(category1 -> modelMapper.map(category, CategoryDTO.class))

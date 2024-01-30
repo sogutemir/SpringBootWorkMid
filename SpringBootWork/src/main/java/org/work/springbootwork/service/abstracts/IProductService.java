@@ -8,7 +8,7 @@ import org.work.springbootwork.dto.ProductDTO;
 import java.util.List;
 
 public interface IProductService {
-    DataResult<List<ProductDTO>> gettAllProduct();
+    DataResult<List<ProductDTO>> getAllProduct();
     DataResult<ProductDTO> getProductById(Long id);
     Result addProduct(ProductDTO productDTO);
     Result updateProduct(ProductDTO productDTO, Long id);

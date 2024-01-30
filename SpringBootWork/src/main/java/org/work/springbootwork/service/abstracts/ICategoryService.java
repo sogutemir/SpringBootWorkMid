@@ -7,7 +7,7 @@ import org.work.springbootwork.dto.CategoryDTO;
 import java.util.List;
 
 public interface ICategoryService {
-    DataResult<List<CategoryDTO>> gettAllCategory();
+    DataResult<List<CategoryDTO>> getAllCategory();
     DataResult<CategoryDTO> getCategoryById(Long id);
     Result addCategory(CategoryDTO categoryDTO);
     Result updateCategory(CategoryDTO categoryDTO, Long id);
