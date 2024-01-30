@@ -15,5 +15,4 @@ public interface IProductService {
     Result deleteProduct(Long id);
     DataResult<List<ProductDTO>> findByCategoryId(Long categoryId);
     DataResult<List<ProductDTO>> findByNameContaining(String name);
-    DataResult<List<ProductDTO>> findProductsByOrderId(Long orderId);
 }

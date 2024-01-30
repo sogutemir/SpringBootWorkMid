@@ -96,15 +96,4 @@ public class ProductService implements IProductService {
         return new SuccessDataResult<>(productDTOS, "Product Listed");
     }
 
-    @Override
-    public DataResult<List<ProductDTO>> findProductsByOrderId(Long orderId) {
-        if(orderId == null) {
-            return new ErrorDataResult<>(null,"Product not found");
-        }
-        List<Product> products = productRepository.findProductsByOrderId(orderId);
-        List<ProductDTO> productDTOS = products.stream()
-                .map(product -> modelMapper.map(product, ProductDTO.class))
-                .collect(java.util.stream.Collectors.toList());
-        return new SuccessDataResult<>(productDTOS, "Product Listed");
-    }
 }
