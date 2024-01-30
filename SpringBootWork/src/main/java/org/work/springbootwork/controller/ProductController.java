@@ -38,6 +38,7 @@ public class ProductController {
         return ResponseUtil.buildDataResultResponse(productService.findByCategoryId(id));
     }
 
+    @GetMapping("/getbyname/{name}")
     public ResponseEntity<DataResult<List<ProductDTO>>> getProductByContainsName(@PathVariable String name){
         return ResponseUtil.buildDataResultResponse(productService.findByNameContaining(name));
     }
